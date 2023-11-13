@@ -1,2 +1,2 @@
-# printf
+printf
 ALX PRINTF project

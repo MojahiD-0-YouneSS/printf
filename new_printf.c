@@ -1,5 +1,13 @@
 #include <stdio.h>
 #include <stdarg.h>
+#include "main.h"
+
+/**
+ * _printf - prints and input into the standard output
+ * @format: the format string
+ * Return: number of bytes printed
+ */
+
 
 int _printf(const char *format, ...)
 {
@@ -18,20 +26,20 @@ int _printf(const char *format, ...)
             switch (*format) 
             {
                 case 'c':
-                    count += putchar(va_arg(args, int));
+                    count += _putchar(va_arg(args, int));
                     break;
                 case 's': 
                 {
                     const char *str = va_arg(args, const char *);
                     while (*str != '\0') 
                     {
-                        count += putchar(*str);
+                        count += _putchar(*str);
                         str++;
                     }
                     break;
                 }
                 case '%':
-                    count += putchar('%');
+                    count += _putchar('%');
                     break;
                 default:
                     // Unsupported conversion specifier, ignore
@@ -40,7 +48,7 @@ int _printf(const char *format, ...)
         } 
         else 
         {
-            count += putchar(*format);
+            count += _putchar(*format);
         }
 
         format++;  // Move to the next character in the format string
