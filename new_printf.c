@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include "main.h"
+#include <unistd.h>
 
 /**
  * _printf - prints and input into the standard output
  * @format: the format string
  * Return: number of bytes printed
  */
-
 
 int _printf(const char *format, ...)
 {
@@ -16,45 +15,50 @@ int _printf(const char *format, ...)
 
     int count = 0;  // To keep track of the number of characters printed
 
-    while (*format != '\0') 
+    while (*format != '\0')
     {
-        if (*format == '%') 
+        if (*format == '%')
         {
             format++;  // Move past the '%'
 
             // Check for conversion specifiers
-            switch (*format) 
+            switch (*format)
             {
                 case 'c':
-                    count += _putchar(va_arg(args, int));
+		{
+		    char c = va_arg(args, int);
+                    count += write(1, &c, 1);
                     break;
-                case 's': 
+		}
+                case 's':
                 {
                     const char *str = va_arg(args, const char *);
-                    while (*str != '\0') 
+                    while (*str != '\0')
                     {
-                        count += _putchar(*str);
+                        count += write(1, str, 1);
                         str++;
                     }
                     break;
                 }
                 case '%':
-                    count += _putchar('%');
+		{
+                    char percent = '%';
+                    count += write(1, &percent, 1);
                     break;
+		}
                 default:
                     // Unsupported conversion specifier, ignore
                     break;
             }
-        } 
-        else 
+        }
+        else
         {
-            count += _putchar(*format);
+            count += write(1, format, 1);
         }
 
         format++;  // Move to the next character in the format string
     }
 
     va_end(args);
-
     return count;
 }
