@@ -11,17 +11,15 @@
 int _printf(const char *format, ...)
 {
     va_list args;
-    va_start(args, format);
+    int count = 0;
 
-    int count = 0;  // To keep track of the number of characters printed
+    va_start(args, format);
 
     while (*format != '\0')
     {
         if (*format == '%')
         {
-            format++;  // Move past the '%'
-
-            // Check for conversion specifiers
+            format++;
             switch (*format)
             {
                 case 'c':
@@ -47,7 +45,6 @@ int _printf(const char *format, ...)
                     break;
 		}
                 default:
-                    // Unsupported conversion specifier, ignore
                     break;
             }
         }
@@ -56,7 +53,7 @@ int _printf(const char *format, ...)
             count += write(1, format, 1);
         }
 
-        format++;  // Move to the next character in the format string
+        format++;
     }
 
     va_end(args);
